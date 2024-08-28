@@ -1,3 +1,5 @@
+package org.example;
+
 import org.datavec.image.loader.NativeImageLoader;
 import org.deeplearning4j.nn.modelimport.keras.KerasModelImport;
 import org.deeplearning4j.nn.modelimport.keras.exceptions.InvalidKerasConfigurationException;
@@ -43,7 +45,7 @@ public class Main {
         return rotatedImage;
     }
 
-    public static void classifyPdfsInFolder(String imgFolder, String outputFolder, MultiLayerNetwork model) throws IOException {
+    public static void classifyImagesInFolder(String imgFolder, String outputFolder, MultiLayerNetwork model) throws IOException {
         File folder = new File(imgFolder);
         File outputDir = new File(outputFolder);
 
@@ -103,11 +105,16 @@ public class Main {
 
     public static void main(String[] args) throws IOException, UnsupportedKerasConfigurationException, InvalidKerasConfigurationException {
 
-        String imgFolder = "C:\\Users\\meta2\\OneDrive\\Desktop\\NETbayID\\data_for_test";
-        String outputFolder = "C:\\Users\\meta2\\OneDrive\\Desktop\\NETbayID\\rotated_cards";
-        File modelFile = new File("C:\\Users\\meta2\\OneDrive\\Desktop\\NETbayID\\idClassifier2.h5");
+        System.out.println(args[0]);
+        System.out.println(args[1]);
+        System.out.println(args[2]);
 
+        String imgFolder = args[0]; //path to image folder
+        String outputFolder = args[1]; //path to rotated image folder
+
+        // Load the model
+        File modelFile = new File(args[2]); //model
         MultiLayerNetwork model = KerasModelImport.importKerasSequentialModelAndWeights(String.valueOf(modelFile), false);
-        classifyPdfsInFolder(imgFolder, outputFolder, model);
+        classifyImagesInFolder(imgFolder, outputFolder, model);
     }
 }
